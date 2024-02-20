@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+</head>
+<body>
+    <header>
+        <h1><%= title %></h1>
+    </header>
+    <main>
+        <form action="/users/company_add" method="post">
+            <div>
+                <label for="company_name">会社名</label>
+                <input type="text" name="company_name" id="company_name" value="<%= sendData.company_name %>">
+            </div>
+            <div>
+                <label for="team">所属部署</label>
+                <input type="text" name="team" id="team" value="<%= sendData.team %>">
+            </div>
+            <input type="submit" value="確認">
+        </form>
+    </main>
+</body>
+</html>

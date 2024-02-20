@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+</head>
+<body>
+    <header>
+        <h1><%= title %></h1>
+    </header>
+    <main>
+        <p><%= content %></p>
+        <form action="/users" method="post">
+            <div>
+                <label for="employee_id">社員ID</label>
+                <input type="text" name="employee_id" id="employee_id" value="<%= id %>">
+            </div>
+
+            <div>
+                <label for="pass">パスワード</label>
+                <input type="password" name="pass" id="pass">
+            </div>
+            <input type="submit" name="login" value="login">
+        </form>
+        <p><a href="/users/add">新規登録の方はこちら</a></p>
+    </main>
+</body>
+</html>

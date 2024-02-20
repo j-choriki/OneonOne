@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <h1><%= title %></h1>
+      <nav>
+        <ul>
+          <li>ログアウト</li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+        <!-- 名前表示 -->
+        <article id="member_list">
+          <% for(let i in users) { %>
+            <p id="<%= users[i].memberNum %>"><%= users[i].name %></p>
+          <% } %>
+          </article>
+
+        <!-- トーク用 -->
+        <article id="message">
+          <div>
+            <!-- メッセージ表示部 -->
+            <ul><li></li></ul>
+            <!-- 操作部 -->
+            <form action="/" method="post">
+              <input type="text" name="msg" placeholder="トークを入力">
+              <input type="submit" name="btn" value="msg">
+              <input type="submit" name="btn" value="fhone">
+            </form>
+            
+          </div>
+        </article>
+        
+    </main>
+    <script src="/javascripts/index.js"></script>
+  </body>
+</html>

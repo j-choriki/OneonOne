@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <script>
+        const ROOM_ID = "<%= roomId %>";
+        // console.log(ROOM_ID);
+    </script>
+    <script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js" defer></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/javascripts/chat.js" defer></script>
+
+</head>
+<body>
+    <div class="main">
+        <div class="main__wrap">
+            <!-- ここにビデオが追加される -->
+            <div id="video-wrap"></div>
+            <div class="video__controller">
+                <button type="button" class="btn__action" onclick="playStop(this)">
+                    <img src="../images/video.png">
+                </button>
+                <button type="button" class="btn__action" onclick="muteUnmute(this)">
+                    <img src="../images/mic.png">
+                </button>
+                <button type="button" class="btn__action" onclick="leaveVideo(this)">
+                    <img src="../images/call.png">
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

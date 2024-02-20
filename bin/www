@@ -1,0 +1,136 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('one:server');
+var http = require('http');
+const cron = require('node-cron');
+
+
+/**z
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+//ソケット通信を行うために追記
+var io = require('socket.io')(server);
+
+const MAX_CONNECTIONS_PER_ROOM = 2;
+let rooms = {}; // 各ルームの接続数を管理するオブジェクト
+
+io.on('connection', (socket) => {
+    socket.on('join-room', (roomId, userId) => {
+        // roomIdごとの接続数を確認
+        const room = rooms[roomId];
+        const numUsers = room ? room.length : 0;
+
+        if (numUsers < MAX_CONNECTIONS_PER_ROOM) {
+            // ルームに新しいユーザーを参加させる
+            socket.join(roomId);
+            // ユーザーをルームの配列に追加
+            if (!room) {
+                rooms[roomId] = [userId];
+            } else {
+                room.push(userId);
+            }
+
+            // ルームに入っているユーザへの通知
+            io.to(roomId).emit('user-connected', userId);
+        } else {
+            // 接続が許可されない場合は切断する
+            console.log(`Connection refused: Maximum connections reached in room ${roomId}`);
+            socket.disconnect(true);
+        }
+
+        // ユーザーが画面を離れたときの処理
+        socket.on("disconnect", () => {
+            if (rooms[roomId]) {
+                // どのユーザーが離れたかを知るためuserIdを送信
+                const index = rooms[roomId].indexOf(userId);
+                if (index !== -1) {
+                    rooms[roomId].splice(index, 1);
+                    io.to(roomId).emit("user-disconnected", userId);
+                }
+            }
+        });
+    });
+});
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
