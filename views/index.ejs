@@ -1,41 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/css/destyle.css' />
+    <link rel='stylesheet' href='/css/index.css' />
   </head>
   <body>
     <header>
-      <h1><%= title %></h1>
-      <nav>
-        <ul>
-          <li>ログアウト</li>
-        </ul>
-      </nav>
     </header>
-
     <main>
         <!-- 名前表示 -->
-        <article id="member_list">
-          <% for(let i in users) { %>
-            <p id="<%= users[i].memberNum %>"><%= users[i].name %></p>
-          <% } %>
-          </article>
+        <section id="member_list">
 
-        <!-- トーク用 -->
-        <article id="message">
-          <div>
-            <!-- メッセージ表示部 -->
-            <ul><li></li></ul>
-            <!-- 操作部 -->
-            <form action="/" method="post">
-              <input type="text" name="msg" placeholder="トークを入力">
-              <input type="submit" name="btn" value="msg">
-              <input type="submit" name="btn" value="fhone">
-            </form>
-            
+          <h2>HAL</h2>           <!-- グループ名を取得 -->
+
+          <select name="select_team">   <!-- チーム名を取得 -->
+            <option value="all">全て</option>
+          </select>
+
+          <div id="team">
+            <h3> &lt;IT&gt; <h3>
+            <ul>
+              <li><span class="out"><span class="in"></span></span>クリス</li>
+              <li><span class="out"><span class="in"></span></span>ナッシュ</li>
+              <li><span class="out"><span class="in"></span></span>レブロン</li>
+            </ul>  
           </div>
-        </article>
+        </section>
+
+        <!-- メッセージボード -->
+        <section id="message">
+          <div id="msg_header">
+            <h3><span>&lt;IT&gt;</span>クリス</h3>
+            <p><img src="/images/fhone.png" alt="電話のアイコン" width="50"></p>
+          </div>
+
+          
+          <div id="message_area">
+            <!-- 件名用/トーク用 -->
+            <% for(let i = 0; i < 2; i++){ %>
+            <div>
+                <% if(i == 1){ %><p id="talk_header">テスト投稿<span>2023/01/01</span></p><% } %>
+                <ul class="<% if (i == 0) { %>subject<% } else { %>talk<% } %>">
+                  <li>テスト投稿<span>2023/01/01</span></li>
+                  <li>テスト投稿２<span>2023/02/02</span></li>
+                </ul>
+                <form action="/" method="post" class="<% if (i == 0) { %>subject<% } else { %>talk<% } %>">
+                  <textarea name="text" id="" cols="30" rows="10"></textarea>
+                  <input type="image" src="/images/send.png" alt="飛行機">
+                </form>
+            </div>
+            <% } %>
+          </div>
+        </section>
         
     </main>
     <script src="/javascripts/index.js"></script>

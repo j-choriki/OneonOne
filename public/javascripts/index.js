@@ -8,8 +8,7 @@ let memberId = "";
 lists.forEach(list =>{
     list.addEventListener('click', () => {
         memberId = list.id;
-        //現在ページのURLを取得する
-        const currentUrl = window.location.href;
+        
     })
 })
 

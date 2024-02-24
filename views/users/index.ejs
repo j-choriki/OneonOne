@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <!-- <link rel="stylesheet" href="/stylesheets/style.css"/> -->
+    <link rel="stylesheet" href="/css/destyle.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <header>
@@ -22,9 +24,10 @@
                 <label for="pass">パスワード</label>
                 <input type="password" name="pass" id="pass">
             </div>
-            <input type="submit" name="login" value="login">
+            <input type="submit" name="login" value="login" id="btn">
+            <p><a href="/users/add">新規登録の方はこちら</a></p>
         </form>
-        <p><a href="/users/add">新規登録の方はこちら</a></p>
+        
     </main>
 </body>
 </html>

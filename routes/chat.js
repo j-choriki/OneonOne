@@ -11,10 +11,7 @@ router.get('/', function(req, res, next) {
     res.redirect(`chat/${ROOM_ID}`);
 });
 
-
 const fs = require('fs');
-
-
 
 //roomIdつきのルームにリダイレクト
 router.get("/:room", (req, res) => { 
