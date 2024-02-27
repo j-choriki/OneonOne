@@ -16,11 +16,16 @@ body header {
 body main form {
   background-color: #ffffff;
   width: 25%;
-  height: 250px;
+  height: 280px;
   position: absolute;
   top: 27%;
   left: 35%;
   padding-top: 20px;
+}
+body main form #alert {
+  color: red;
+  font-size: 0.8rem;
+  margin: 0 20px;
 }
 body main form div {
   margin: 0 auto;
@@ -53,6 +58,7 @@ body main form #btn:hover {
 body main form p {
   margin-top: 10px;
   margin-left: 5%;
+  font-size: 0.8rem;
 }
 body main form p a {
   color: #00B7FF;

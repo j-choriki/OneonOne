@@ -13,50 +13,68 @@
     <main>
         <!-- 名前表示 -->
         <section id="member_list">
-
-          <h2>HAL</h2>           <!-- グループ名を取得 -->
-
+          <h2><%= group %></h2>           
           <select name="select_team">   <!-- チーム名を取得 -->
             <option value="all">全て</option>
+            <%for(let i in teams){ %>
+              <option value="<%= teams[i].id %>"><%= teams[i].name %></option>
+            <% } %>
+
           </select>
 
           <div id="team">
-            <h3> &lt;IT&gt; <h3>
-            <ul>
-              <li><span class="out"><span class="in"></span></span>クリス</li>
-              <li><span class="out"><span class="in"></span></span>ナッシュ</li>
-              <li><span class="out"><span class="in"></span></span>レブロン</li>
-            </ul>  
+            <% for(let i in teams){ %>
+              <div>
+                <h3>&lt;<%= teams[i].name %>&gt;</h3>
+                <ul>
+                  <% for(let n in users) { %>
+                    <% if(teams[i].id == users[n].teamId) { %>
+                      <li class="member" id="<%= users[n].memberNum %>"><span class="out"><span class="in <% if(users[n].state == 1){ %>login<% } else { %>logout <% } %>"></span></span><%= users[n].name %></li>
+                    <% } %>
+                  <% } %>
+                </ul>
+              </div>  
+            <% } %>
           </div>
         </section>
 
         <!-- メッセージボード -->
         <section id="message">
+
           <div id="msg_header">
-            <h3><span>&lt;IT&gt;</span>クリス</h3>
+            <h3 id="msg_header_name"></h3>
             <p><img src="/images/fhone.png" alt="電話のアイコン" width="50"></p>
           </div>
-
-          
+    
           <div id="message_area">
             <!-- 件名用/トーク用 -->
-            <% for(let i = 0; i < 2; i++){ %>
+            <% for(let k = 0; k < 2; k++){ %>
             <div>
-                <% if(i == 1){ %><p id="talk_header">テスト投稿<span>2023/01/01</span></p><% } %>
-                <ul class="<% if (i == 0) { %>subject<% } else { %>talk<% } %>">
+                <% if(k == 1){ %><p id="talk_header">テスト投稿<span>2023/01/01</span></p><% } %>
+                <ul class="<% if (k == 0) { %>ulSubject<% } else { %>ulTalk<% } %>">
+                  <%if(msgTitle){ for(let z in msgTitle){%>
+                    <li><%= msgTitle[z].name %><span><%= msgTitle[z].time%></span></li>
+                  <% }} %>
                   <li>テスト投稿<span>2023/01/01</span></li>
                   <li>テスト投稿２<span>2023/02/02</span></li>
                 </ul>
-                <form action="/" method="post" class="<% if (i == 0) { %>subject<% } else { %>talk<% } %>">
-                  <textarea name="text" id="" cols="30" rows="10"></textarea>
+                <form action="/" method="post" id="<% if (k == 0) { %>formSubject<% } else { %>formTalk<% } %>">
+                  <textarea name="<% if (k == 0) { %>subject<% } else { %>talk<% } %>" id="" cols="30" rows="10"></textarea>
+                  <!-- 送信ボタン -->
                   <input type="image" src="/images/send.png" alt="飛行機">
+                  <!-- 送信で値を送る -->
+                  <input type="hidden" name="btn" value="<% if (k == 0) { %>subject<% } else { %>talk<% } %>">
+                  <!-- 選択したmemberIdをvalueに格納 -->
+                  <input type="hidden" name="memberId" value="" id="sendMemberId">
                 </form>
             </div>
             <% } %>
           </div>
+
         </section>
         
     </main>
+    <script src="/socket.io/socket.io.js" defer></script>
     <script src="/javascripts/index.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@ const io = require('socket.io')(server);    //どのサーバーで通信を行�
 //ランダムなidを発行する関数
 const {v4: uuidV4} = require('uuid');  //{v4: uuidV4} v4関数をuuidV4にリネーム
 const { log } = require('console');
+const { userInfo } = require('os');
 
 // ログインチェックの関数
 function check(req, res) {
@@ -26,29 +27,159 @@ router.get('/', function(req, res, next) {
   
   //ログイン中のユーザー情報を取得する
   let usr_info = req.session.login;
-  
+
   //DBから自分のグループメンバーの情報を取得する
   db.Member.findAll({
     where: {
-      groupId: {[Op.eq]: usr_info.groupId}
-    }
+      groupId: {[Op.eq]: usr_info.groupId},
+      memberNum: {[Op.ne]: usr_info.memberNum}
+    },
+    include: [{ //テーブルの結合
+      model: db.Group,     // Groupモデルを含める
+      attributes: ['name'], // Groupモデルから取得する属性を指定
+    },
+      { 
+        model: db.Team,     // Groupモデルを含める
+        attributes: ['name'] // Groupモデルから取得する属性を指定
+    }],
+    order: [['teamId', 'ASC']]
   }).then(usrs => {
-    let data = {
-      title: 'ホーム画面',
-      users: usrs
-    } 
-    res.render('index', data);
-  });
-  
+    let group = usrs[0].Group.name;
+    db.Team.findAll({
+      where: {
+        groupId: {[Op.eq]: usr_info.groupId}
+      }
+    }).then(teams => {
+      if(req.session.memberId){
+        //DBからtitleを取得
+        db.title.findAll({
+          where: {
+            [Op.or]:[
+                {
+                  user1: { [Op.eq]: usr_info.memberNum },
+                  user2: { [Op.eq]: req.session.memberId }
+                },
+                {
+                  user1: { [Op.eq]: req.session.memberId },
+                  user2: { [Op.eq]: usr_info.memberNum }
+                }
+      
+            ]
+          }
+        }).then(title =>{
+          let titleAry = [];
+          for(let i in title){
+            let titleObj = {};
+            titleObj.id = title[i].id;
+            titleObj.name = title[i].name;
+            let dateObj = new Date(title[i].createdAt);
+            var formattedDate = dateObj.toISOString().slice(0,10).replace(/-/g,"/");
+            titleObj.time = formattedDate;
+            titleAry.push(titleObj); 
+          }
+          let data = {
+            title: 'ホーム画面',
+            users: usrs,  //メンバー情報
+            group: group, //グループ名
+            teams: teams,  //チーム名
+            msgTitle: titleAry, //タイトル
+            user: usr_info, //ログインしているユーザー情報
+          } 
+          res.render('index', data);
+        }).catch(error => {
+          console.error('通信エラー:', error);
+        });
+      } else {
+        let data = {
+          title: 'ホーム画面',
+          users: usrs,  //メンバー情報
+          group: group, //グループ名
+          teams: teams,  //チーム名
+          msgTitle:null,
+          user: usr_info, //ログインしているユーザー情報
+        } 
+        res.render('index', data);
+      }
+    })
+  })
 });
 
 router.post('/', (req, res, next) => {
+  //押されたボタンを格納
   const sendBtn = req.body.btn;
+  //ログイン中のユーザー情報を取得する
+  const usr_info = req.session.login;
   
-  //通話ボタンがおさされれば
-  if(sendBtn == 'fhone'){
-    res.redirect('chat');
+  //トークしているmemberIdの取得
+  const memberId = req.body.memberId;
+  req.session.memberId = memberId;  //セッションにmemberIdを追加
+
+  if(sendBtn == 'subject') {
+    db.title.create({
+        name:req.body.subject,
+        user1: usr_info.memberNum,
+        user2: memberId
+    }).then(title => {
+      res.redirect('/');
+    })
   }
+
+  //通話ボタンがおさされれば
+  // if(sendBtn == 'fhone'){
+  //   res.redirect('chat');
+  // }
 });
+
+
+/* 非同期でセッションの値を取得する用 */
+router.get('/session-user-data', function(req, res, next) {
+  // セッションから値を取得する
+  const sessionData = req.session.login; 
+  // セッション情報を JSON 形式で返す
+  res.json(sessionData);
+});
+
+// router.get('/session-user-and-member', function(req, res, next) {
+//   // ユーザーID
+//   const sessionData = req.session.login.memberNum;
+//   const memnerId = req.session.
+//   // セッション情報を JSON 形式で返す
+//   res.json(sessionData);
+// });
+
+//トークタイトルを非同期で取得するため処理
+router.post('/data', (req, res) => {
+  const userId = req.body.userId;
+  const memberId = req.body.memberId;
+  //DBからtitleを取得
+  db.title.findAll({
+    where: {
+      [Op.or]: [
+        {
+          user1: { [Op.eq]: userId },
+          user2: { [Op.eq]: memberId }
+        },
+        {
+          user1: { [Op.eq]: memberId },
+          user2: { [Op.eq]: userId }
+        }
+      ]
+    }
+  }).then(title =>{
+    let titleAry = [];
+    for(let i in title){
+      let titleObj = {};
+      titleObj.id = title[i].id;
+      titleObj.name = title[i].name;
+      let dateObj = new Date(title[i].createdAt);
+      var formattedDate = dateObj.toISOString().slice(0,10).replace(/-/g,"/");
+      titleObj.time = formattedDate;
+      titleAry.push(titleObj); 
+    }
+    res.json(titleAry);
+  }).catch(error => {
+    console.error('通信エラー:', error);
+  });
+})
 
 module.exports = router;

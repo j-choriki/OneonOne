@@ -30,6 +30,10 @@ const MAX_CONNECTIONS_PER_ROOM = 2;
 let rooms = {}; // 各ルームの接続数を管理するオブジェクト
 
 io.on('connection', (socket) => {
+    socket.on('sendTitle', (title) => {
+      
+    })
+
     socket.on('join-room', (roomId, userId) => {
         // roomIdごとの接続数を確認
         const room = rooms[roomId];

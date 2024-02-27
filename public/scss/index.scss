@@ -59,13 +59,18 @@ body{
                         }
                         .in{
                             display: inline-block;
-                            background-color: red;  //ここの色を変えることで状態を表す
                             width: 14px;
                             height: 14px;
                             border-radius: 15px;
                             position: absolute;
                             top: 1px;
                             left: 1px;
+                        }
+                        .login{
+                            background-color: red;  //ここの色を変えることで状態を表す
+                        }
+                        .logout{
+                            background-color: gray;  //ここの色を変えることで状態を表す
                         }
                     }
                 }
@@ -89,6 +94,7 @@ body{
                     span{
                         padding-right: 15px;
                         font-style: italic;
+                        font-size: 1.3rem;
                     }
                 }
             }//msg_header

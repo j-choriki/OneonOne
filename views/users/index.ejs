@@ -13,8 +13,9 @@
         <h1><%= title %></h1>
     </header>
     <main>
-        <p><%= content %></p>
+       
         <form action="/users" method="post">
+            <span id="alert"><%= content %></span>
             <div>
                 <label for="employee_id">社員ID</label>
                 <input type="text" name="employee_id" id="employee_id" value="<%= id %>">

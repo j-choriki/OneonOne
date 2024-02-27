@@ -25,12 +25,13 @@ router.post('/', (req, res, next) =>{
       }
     }).then(usr => {
       if(usr != null){  //ログイン
+        usr.state = 1;  //stateの更新(ログイン状態に)
         req.session.login = usr;
         let back = req.session.back;
         if(back == null){
           back = '../';
         }
-        res.redirect(back);
+        usr.save().then(() => {res.redirect(back);});
       } else {
         let data = {
           title: 'Login',
@@ -73,7 +74,6 @@ router.get('/add',(req, res, next) => {
       form.division = formData.division;
     }
     
-
     let data = {
       title: 'Sign Up',
       content: div_ary,

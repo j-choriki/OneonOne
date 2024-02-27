@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Message.init({
     user1: DataTypes.STRING,
     user2: DataTypes.STRING,
+    titleId : DataTypes.INTEGER,
     msg: DataTypes.TEXT,
-    send_time: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Message',
