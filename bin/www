@@ -8,7 +8,7 @@ var app = require('../app');
 var debug = require('debug')('one:server');
 var http = require('http');
 const cron = require('node-cron');
-
+const db = require('../models/index');
 
 /**z
  * Get port from environment and store in Express.
@@ -30,8 +30,17 @@ const MAX_CONNECTIONS_PER_ROOM = 2;
 let rooms = {}; // 各ルームの接続数を管理するオブジェクト
 
 io.on('connection', (socket) => {
-    socket.on('sendTitle', (title) => {
-      
+    
+    socket.on('sendTitle', (data) => {
+        //データの登録
+        db.title.create({
+          name:data.title,
+          user1: data.userId,
+          user2: data.memberId,
+      }).then(title => {
+        //登録データの送信
+        io.emit('insertTitle', title);
+      })
     })
 
     socket.on('join-room', (roomId, userId) => {
@@ -50,7 +59,7 @@ io.on('connection', (socket) => {
             }
 
             // ルームに入っているユーザへの通知
-            io.to(roomId).emit('user-connected', userId);
+            io.to(roomId).emit('user-connectedn', userId);
         } else {
             // 接続が許可されない場合は切断する
             console.log(`Connection refused: Maximum connections reached in room ${roomId}`);

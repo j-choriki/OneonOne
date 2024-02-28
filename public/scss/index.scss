@@ -8,7 +8,7 @@ body{
     display: flex;
     header{
         width: 5%;
-        height: 100vh;
+        // height: 100vh;
         background-color: $headerColor;
     }
     main{
@@ -114,7 +114,8 @@ body{
                         padding: 15px;
                         display: flex;
                         justify-content: space-between;
-                        border-left:1rem solid $headerColor;    
+                        border-left:1rem solid $headerColor;  
+                        height: 7%;  
                         span{
                             display: inline-block;
                             text-align: center; 
@@ -126,6 +127,8 @@ body{
                             background-color: $talkColor;
                         }
                         &.subject{
+                            height: 85%;
+                            overflow: scroll;
                             li{
                                 width: 80%;
                                 height: 80px;

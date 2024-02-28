@@ -4,7 +4,6 @@ body {
 }
 body header {
   width: 5%;
-  height: 100vh;
   background-color: #284155;
 }
 body main {
@@ -107,6 +106,7 @@ body main #message #message_area div #talk_header {
   display: flex;
   justify-content: space-between;
   border-left: 1rem solid #284155;
+  height: 7%;
 }
 body main #message #message_area div #talk_header span {
   display: inline-block;
@@ -115,6 +115,10 @@ body main #message #message_area div #talk_header span {
 }
 body main #message #message_area div ul li {
   background-color: #F2F2F2;
+}
+body main #message #message_area div ul.subject {
+  height: 85%;
+  overflow: scroll;
 }
 body main #message #message_area div ul.subject li {
   width: 80%;

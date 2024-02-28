@@ -50,13 +50,12 @@
             <!-- 件名用/トーク用 -->
             <% for(let k = 0; k < 2; k++){ %>
             <div>
-                <% if(k == 1){ %><p id="talk_header">テスト投稿<span>2023/01/01</span></p><% } %>
-                <ul class="<% if (k == 0) { %>ulSubject<% } else { %>ulTalk<% } %>">
-                  <%if(msgTitle){ for(let z in msgTitle){%>
-                    <li><%= msgTitle[z].name %><span><%= msgTitle[z].time%></span></li>
-                  <% }} %>
-                  <li>テスト投稿<span>2023/01/01</span></li>
-                  <li>テスト投稿２<span>2023/02/02</span></li>
+                <% if(k == 1){ %><p id="talk_header"></p><% } %>
+                <!-- <p id="talk_header">テスト投稿<span>2023/01/01</span></p> -->
+                <ul class="<% if (k == 0) { %>subject<% } else { %>talk<% } %>">
+                  <%if(k == 0){ for(let z in msgTitle){%>
+                    <li class="<% if(k == 0){ %>titles<% } else {%>talks<% } %>"><%= msgTitle[z].name %><span><%= msgTitle[z].time%></span></li>
+                  <% }}%>
                 </ul>
                 <form action="/" method="post" id="<% if (k == 0) { %>formSubject<% } else { %>formTalk<% } %>">
                   <textarea name="<% if (k == 0) { %>subject<% } else { %>talk<% } %>" id="" cols="30" rows="10"></textarea>

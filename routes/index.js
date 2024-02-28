@@ -130,6 +130,7 @@ router.post('/', (req, res, next) => {
   // }
 });
 
+/*==========以下非同期通信用======================================================*/
 
 /* 非同期でセッションの値を取得する用 */
 router.get('/session-user-data', function(req, res, next) {
@@ -139,13 +140,20 @@ router.get('/session-user-data', function(req, res, next) {
   res.json(sessionData);
 });
 
-// router.get('/session-user-and-member', function(req, res, next) {
-//   // ユーザーID
-//   const sessionData = req.session.login.memberNum;
-//   const memnerId = req.session.
-//   // セッション情報を JSON 形式で返す
-//   res.json(sessionData);
-// });
+router.post('/session-insert-memberId', function(req, res, next) {
+  //セッションにクリックされたmemberIdを登録
+  req.session.memberId = req.body.memberId;
+  res.status(200).send('セッションに memberId を登録しました');
+});
+
+router.post('/get-user-and-member', function(req, res, next) {
+  console.log(req.session.memberId);
+  // ユーザーID
+  const userId = req.session.login.memberNum;
+  const memberId = req.session.memberId;
+  // セッション情報を JSON 形式で返す
+  res.json({ userId: userId, memberId: memberId });
+});
 
 //トークタイトルを非同期で取得するため処理
 router.post('/data', (req, res) => {
@@ -180,6 +188,35 @@ router.post('/data', (req, res) => {
   }).catch(error => {
     console.error('通信エラー:', error);
   });
+})
+
+//トーク情報を返す非同期通信
+router.post('/talk_data', (req, res, next) => {
+    const userId = req.body.userId;
+    const memberId = req.body.memberId;
+    const titleId = req.body.titleId;
+
+    db.Message.findAll({
+      where : {
+        [Op.or]: [
+          {
+            user1: { [Op.eq]: userId },
+            user2: { [Op.eq]: memberId }
+          },
+          {
+            user1: { [Op.eq]: memberId },
+            user2: { [Op.eq]: userId }
+          }
+        ],
+        titleId : {[Op.eq]: titleId},
+      }
+    }).then(data=> {
+        talkAry = [];
+        for(let i in data){
+          talkAry.push(data[i].msg);
+        }
+        res.json(talkAry); 
+    })
 })
 
 module.exports = router;
