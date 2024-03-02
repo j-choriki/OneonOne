@@ -67,8 +67,13 @@ body{
                             left: 1px;
                         }
                         .login{
-                            background-color: red;  //ここの色を変えることで状態を表す
+                            background-color: greenyellow;  //ここの色を変えることで状態を表す
                         }
+
+                        .calling{
+                            background-color:red;
+                        }
+
                         .logout{
                             background-color: gray;  //ここの色を変えることで状態を表す
                         }
@@ -123,9 +128,6 @@ body{
                         }
                     }
                     ul{
-                        li{
-                            background-color: $talkColor;
-                        }
                         &.subject{
                             height: 85%;
                             overflow: scroll;
@@ -137,6 +139,7 @@ body{
                                 font-size: 1.5rem;
                                 font-weight:bold;
                                 border-left: 1rem solid $headerColor;
+                                background-color: $talkColor;
                                 span{
                                     display: block;
                                     font-size:1rem;
@@ -147,11 +150,22 @@ body{
                             }
                         }
                         &.talk{
+                            height: 75%;
+                            overflow: scroll;
                             li{
-                                padding:10px;
-                                border-radius: 15px;
-                                width: 40%;
+                                &.right{
+                                    text-align: right;
+                                }
+                                // width: 40%;
                                 margin: 20px;
+                                span{
+                                    text-align: left;
+                                    background-color: $talkColor;
+                                    display: inline-block;
+                                    width: 50%;
+                                    padding:10px;
+                                    border-radius: 15px;
+                                }
                             }
                         }
                     }

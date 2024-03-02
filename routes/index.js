@@ -63,7 +63,6 @@ router.get('/', function(req, res, next) {
                   user1: { [Op.eq]: req.session.memberId },
                   user2: { [Op.eq]: usr_info.memberNum }
                 }
-      
             ]
           }
         }).then(title =>{
@@ -122,12 +121,9 @@ router.post('/', (req, res, next) => {
     }).then(title => {
       res.redirect('/');
     })
+  }else if(sendBtn == 'chat'){
+    res.redirect('chat');
   }
-
-  //通話ボタンがおさされれば
-  // if(sendBtn == 'fhone'){
-  //   res.redirect('chat');
-  // }
 });
 
 /*==========以下非同期通信用======================================================*/
@@ -211,9 +207,13 @@ router.post('/talk_data', (req, res, next) => {
         titleId : {[Op.eq]: titleId},
       }
     }).then(data=> {
+      
         talkAry = [];
         for(let i in data){
-          talkAry.push(data[i].msg);
+          let msgData = [];
+          msgData.push(data[i].user1)
+          msgData.push(data[i].msg);
+          talkAry.push(msgData);
         }
         res.json(talkAry); 
     })

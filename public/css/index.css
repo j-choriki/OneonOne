@@ -63,6 +63,9 @@ body main #member_list #team ul li .in {
   left: 1px;
 }
 body main #member_list #team ul li .login {
+  background-color: greenyellow;
+}
+body main #member_list #team ul li .calling {
   background-color: red;
 }
 body main #member_list #team ul li .logout {
@@ -113,9 +116,6 @@ body main #message #message_area div #talk_header span {
   text-align: center;
   font-size: 1rem;
 }
-body main #message #message_area div ul li {
-  background-color: #F2F2F2;
-}
 body main #message #message_area div ul.subject {
   height: 85%;
   overflow: scroll;
@@ -128,6 +128,7 @@ body main #message #message_area div ul.subject li {
   font-size: 1.5rem;
   font-weight: bold;
   border-left: 1rem solid #284155;
+  background-color: #F2F2F2;
 }
 body main #message #message_area div ul.subject li span {
   display: block;
@@ -136,11 +137,23 @@ body main #message #message_area div ul.subject li span {
   margin-top: 15px;
   text-align: right;
 }
+body main #message #message_area div ul.talk {
+  height: 75%;
+  overflow: scroll;
+}
 body main #message #message_area div ul.talk li {
+  margin: 20px;
+}
+body main #message #message_area div ul.talk li.right {
+  text-align: right;
+}
+body main #message #message_area div ul.talk li span {
+  text-align: left;
+  background-color: #F2F2F2;
+  display: inline-block;
+  width: 50%;
   padding: 10px;
   border-radius: 15px;
-  width: 40%;
-  margin: 20px;
 }
 body main #message #message_area div form {
   background-color: #F2F2F2;

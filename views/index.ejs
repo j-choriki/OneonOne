@@ -29,7 +29,7 @@
                 <ul>
                   <% for(let n in users) { %>
                     <% if(teams[i].id == users[n].teamId) { %>
-                      <li class="member" id="<%= users[n].memberNum %>"><span class="out"><span class="in <% if(users[n].state == 1){ %>login<% } else { %>logout <% } %>"></span></span><%= users[n].name %></li>
+                      <li class="member" id="<%= users[n].memberNum %>"><span class="out"><span class="in" id="<%= users[n].memberNum %>"></span></span><%= users[n].name %></li>
                     <% } %>
                   <% } %>
                 </ul>
@@ -43,7 +43,10 @@
 
           <div id="msg_header">
             <h3 id="msg_header_name"></h3>
-            <p><img src="/images/fhone.png" alt="電話のアイコン" width="50"></p>
+            <form method="post" action="">
+              <input type="image" src="/images/phone.svg" alt="電話のアイコン" width="50">
+              <input type="hidden" name="btn" value="chat">
+            </form>
           </div>
     
           <div id="message_area">
@@ -57,7 +60,7 @@
                     <li class="<% if(k == 0){ %>titles<% } else {%>talks<% } %>"><%= msgTitle[z].name %><span><%= msgTitle[z].time%></span></li>
                   <% }}%>
                 </ul>
-                <form action="/" method="post" id="<% if (k == 0) { %>formSubject<% } else { %>formTalk<% } %>">
+                <form action="/" method="post" id="<% if (k == 0) { %>formSubject<% } else { %>formTalk<% } %>" class="form">
                   <textarea name="<% if (k == 0) { %>subject<% } else { %>talk<% } %>" id="" cols="30" rows="10"></textarea>
                   <!-- 送信ボタン -->
                   <input type="image" src="/images/send.png" alt="飛行機">
@@ -74,6 +77,6 @@
         
     </main>
     <script src="/socket.io/socket.io.js" defer></script>
-    <script src="/javascripts/index.js"></script>
+    <script src="/javascripts/index.js" defer></script>
   </body>
 </html>

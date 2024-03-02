@@ -11,15 +11,8 @@ router.get('/', function(req, res, next) {
     res.redirect(`chat/${ROOM_ID}`);
 });
 
-const fs = require('fs');
-
 //roomIdつきのルームにリダイレクト
 router.get("/:room", (req, res) => { 
-    // ファイルからクーロンの値を読み込む
-    const cronValue = fs.readFileSync('cronValue.txt', 'utf8');
-
-    console.log('Cron value:', cronValue); 
-    
     let data = {
         title:'chat',
         roomId: req.params.room

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="../css/destyle.css"/>
+    <link rel="stylesheet" href="../css/chat.css"/>
+
     <script>
         const ROOM_ID = "<%= roomId %>";
         // console.log(ROOM_ID);
@@ -16,20 +18,20 @@
 </head>
 <body>
     <div class="main">
+        <div class="video__controller">
+            <button type="button" class="btn__action" onclick="playStop(this)" id="video">
+                <img src="../images/videoOff.png">
+            </button>
+            <button type="button" class="btn__action" onclick="muteUnmute(this)" id="mic">
+                <img src="../images/micOff.png" alt="">
+            </button>
+            <button type="button" class="btn__action" onclick="leaveVideo(this)" id="hungUp">
+                <img src="../images/call.png">
+            </button>
+        </div>
         <div class="main__wrap">
             <!-- ここにビデオが追加される -->
             <div id="video-wrap"></div>
-            <div class="video__controller">
-                <button type="button" class="btn__action" onclick="playStop(this)">
-                    <img src="../images/video.png">
-                </button>
-                <button type="button" class="btn__action" onclick="muteUnmute(this)">
-                    <img src="../images/mic.png">
-                </button>
-                <button type="button" class="btn__action" onclick="leaveVideo(this)">
-                    <img src="../images/call.png">
-                </button>
-            </div>
         </div>
     </div>
 </body>

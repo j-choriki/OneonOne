@@ -36,6 +36,7 @@ const connectToNewUser = (userId, stream) => {
     const video = document.createElement("video");
     //受信の処理
     call.on("stream",(userVideoStream) => {
+        console.log('かくにん');
         addVideoStream(video, userVideoStream); //新たにvideoを追加
     });
     
@@ -98,9 +99,11 @@ const muteUnmute = (e) => {
     if(enabled){
         e.classList.add("active");
         myVideoStream.getAudioTracks()[0].enabled = false; 
+        e.children[0].src = '../images/micOn.png';
     } else {
         e.classList.remove("active");
         myVideoStream.getAudioTracks()[0].enabled = true; 
+        e.children[0].src = '../images/micOff.png';
     }
 };
 
@@ -109,9 +112,11 @@ const playStop = (e) => {
     if(enabled){
         e.classList.add("active");
         myVideoStream.getVideoTracks()[0].enabled = false;
+        e.children[0].src = '../images/videoOn.png';
     } else {
         e.classList.remove("active");
         myVideoStream.getVideoTracks()[0].enabled = true;
+        e.children[0].src = '../images/videoOff.png';
     }
 };
 
@@ -122,6 +127,8 @@ const leaveVideo = (e) => {
     for(let i = videos.length - 1; i >= 0; i--) {
         videos[i].remove();
     }
+    //ホーム画面へ遷移
+    window.location.href = '/';
 }
 
 
