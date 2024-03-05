@@ -106,24 +106,13 @@ router.get('/', function(req, res, next) {
 router.post('/', (req, res, next) => {
   //押されたボタンを格納
   const sendBtn = req.body.btn;
-  //ログイン中のユーザー情報を取得する
-  const usr_info = req.session.login;
   
-  //トークしているmemberIdの取得
-  const memberId = req.body.memberId;
-  req.session.memberId = memberId;  //セッションにmemberIdを追加
+  //チャットURLをDBに登録するために必要な値をセッションに登録
+  req.session.phoneData = req.body.phoneData;
 
-  if(sendBtn == 'subject') {
-    db.title.create({
-        name:req.body.subject,
-        user1: usr_info.memberNum,
-        user2: memberId
-    }).then(title => {
-      res.redirect('/');
-    })
-  }else if(sendBtn == 'chat'){
-    res.redirect('chat');
-  }
+  if(sendBtn == 'chat'){
+      res.redirect('chat');
+    }
 });
 
 /*==========以下非同期通信用======================================================*/

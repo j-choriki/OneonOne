@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');   //sessionを扱う
 
-
 //セッションの設定
 let session_opt ={
   secret: 'keyboard cat',             //秘密キーとなるテキスト

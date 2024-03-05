@@ -13,11 +13,23 @@ router.get('/', function(req, res, next) {
 
 //roomIdつきのルームにリダイレクト
 router.get("/:room", (req, res) => { 
+    
     let data = {
         title:'chat',
-        roomId: req.params.room
+        roomId: req.params.room,
     }                  
     res.render("chat/", data);    
+});
+
+//非同期通信でチャット画面訪問時に相手にURLを送信するために必要なデータを送信
+router.get('/chat/sendData', function(req, res, next) {
+    const sendData = req.session.phoneData;
+    console.log('確認',sendData);
+    if (sendData) {
+        res.json({ sendData: sendData });
+    } else {
+        res.status(404).json({ error: 'Data not found' });
+    }
 });
 
 module.exports = router;

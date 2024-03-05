@@ -9,6 +9,22 @@ myVideo.muted = true;   //作成したvideoプロパティに含まれているm
 const peers = {};   //ユーザーごとのピア情報を含むメディアコネクションオブジェクト保存用オブジェクト
 let myVideoStream;
 
+fetch('chat/sendData')
+.then(response => response.json())
+.then(data => {
+    const insertData = JSON.parse(data.sendData);
+    //URLを取得する
+    const currentURL = document.URL;
+    const sendData = {
+        userId: insertData.userId,
+        memberId: insertData.memberId,
+        titleId: insertData.titleId,
+        talk:currentURL,
+    }
+    socket.emit('sendTalk',sendData);
+    
+}).catch(error => console.error('Error:', error));
+
 /**
  * 作成したVideoDOMに受け取ったstreamを追加する関数
  * @param {*} video :videoDom
@@ -36,7 +52,6 @@ const connectToNewUser = (userId, stream) => {
     const video = document.createElement("video");
     //受信の処理
     call.on("stream",(userVideoStream) => {
-        console.log('かくにん');
         addVideoStream(video, userVideoStream); //新たにvideoを追加
     });
     
@@ -130,5 +145,8 @@ const leaveVideo = (e) => {
     //ホーム画面へ遷移
     window.location.href = '/';
 }
+
+
+
 
 

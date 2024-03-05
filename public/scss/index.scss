@@ -29,11 +29,12 @@ body{
             }
 
             select{
+                font-size: 1.2rem;
                 width: 200px;
                 border-radius: 20px;
                 color: black;
                 background-color: $talkColor;
-                padding-left: 40px;
+                padding-left: 25px;
             }
 
             #team{

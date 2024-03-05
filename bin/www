@@ -30,9 +30,9 @@ app.set('port', port);
  */
 
 /* クーロンに関数するもの */
-cron.schedule('*/2 * * * * *', () => {  //毎秒実行
+cron.schedule('*/2 * * * * *', () => {  //2秒ごとに実行
   db.Member.findAll({
-    attributes:[
+    attributes:[  //抽出するカラムを選択
       'memberNum',
       'state'
     ],
@@ -71,7 +71,6 @@ io.on('connection', (socket) => {
       }).then(talk => {
         io.emit('insertTalk', talk);
       })
-
     })
 
     socket.on('join-room', (roomId, userId) => {

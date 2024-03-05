@@ -24,11 +24,12 @@ body main #member_list h2 {
   margin: 40px 0 20px 0;
 }
 body main #member_list select {
+  font-size: 1.2rem;
   width: 200px;
   border-radius: 20px;
   color: black;
   background-color: #F2F2F2;
-  padding-left: 40px;
+  padding-left: 25px;
 }
 body main #member_list #team {
   font-size: 1.3rem;
