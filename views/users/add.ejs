@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="/css/destyle.css"/>
+    <link rel="stylesheet" href="/css/add.css"/>
+
 </head>
 <body>
     <header>
         <h1><%= title %></h1>
+        <nav>
+            <ul>
+                <li id="joinGroup" class="active">グループに参加</li>
+                <li id="createGroup" class="">グループを作成</li>
+            </ul>
+        </nav>
     </header>
+
     <main>
-        <form action="/users/add" method="post">
+        <form action="/users/add" method="post" id="joinForm">
             <div>
-                <label for="employee_id">社員ID</label>
-                <input type="text" name="employee_id" id="employee_id" value="<%= form.employee_id %>">
-                <% if(err != null){for(let i in err){if(err[i].path === 'employee_id') { %>
+                <label for="member_id">メンバーID</label>
+                <input type="text" name="member_id" id="member_id" value="<%= form.member_id %>">
+                <% if(err != null){for(let i in err){if(err[i].path === 'member_id') { %>
                     <span class="err"><%= err[i].msg %></span>
                 <% }}} %>
             </div>
@@ -34,27 +43,61 @@
                 <% }}} %>
             </div>
             <div>
-                <label for="company_id">会社ID</label>
-                <input type="text" name="company_id" id="company_id" value="<%= form.company_id %>">
+                <label for="group_id">グループID</label>
+                <input type="text" name="group_id" id="group_id" value="<%= form.group_id %>">
+                <% if(err != null){for(let i in err){if(err[i].path === 'group_id') { %>
+                    <span class="err"><%= err[i].msg %></span>
+                <% }}} %>
+            </div>
+            <div>
+                <label for="division">チーム</label>
+                <select name="division" id="division">
+                    <option value="999">グループID選択後選択可
+                    </option>
+                </select>
+            </div>
+            <button name="btn" value="btnJoin">送信</button>
+            <p><a href="/users">ログイン画面へ</a></p>
+        </form>
+
+        <form action="/users/add" method="post" id="createForm">
+            <div>
+                <label for="employee_id2">メンバーID</label>
+                <input type="text" name="employee_id" id="employee_id2" value="<%= form.employee_id %>">
+                <% if(err != null){for(let i in err){if(err[i].path === 'employee_id') { %>
+                    <span class="err"><%= err[i].msg %></span>
+                <% }}} %>
+            </div>
+            <div>
+                <label for="name2">氏名</label>
+                <input type="text" name="name" id="name2" value="<%= form.name %>">
+                <% if(err != null){for(let i in err){if(err[i].path === 'name') { %>
+                    <span class="err"><%= err[i].msg %></span>
+                <% }}} %>
+            </div>
+            <div>
+                <label for="pass2">パスワード</label>
+                <input type="password" name="pass" id="pass2" value="<%= form.pass %>">
+                <% if(err != null){for(let i in err){if(err[i].path === 'pass') { %>
+                    <span class="err"><%= err[i].msg %></span>
+                <% }}} %>
+            </div>
+            <div>
+                <label for="company_id2">グループ名</label>
+                <input type="text" name="company_id" id="company_id2" value="<%= form.company_id %>">
                 <% if(err != null){for(let i in err){if(err[i].path === 'company_id') { %>
                     <span class="err"><%= err[i].msg %></span>
                 <% }}} %>
             </div>
             <div>
-                <label for="division">所属部署</label>
-                <select name="division" id="division">
-                    <option value="999">選択してください</option>
-                    <% for(let i in content){ %>
-                        <option value="<%= content[i].id %>" <% if(content[i].id == form.division){%>selected<%} %>><%= content[i].name%></option>
-                    <% } %>
-                </select>
-                <% if(err != null){for(let i in err){if(err[i].path === 'division') { %>
-                    <span class="err"><%= err[i].msg %></span>
-                <% }}} %>
+                <label for="division2">チーム</label>
+                <input type="text" name="teamName" value="" id="division2">
             </div>
-            <input type="submit" value="確認" name="conf">
+            <button name="btn" value="btnCreate">送信</button>
+            <p><a href="/users">ログイン画面へ</a></p>
         </form>
-        <p><a href="/users">ログイン画面へ</a></p>
+    
     </main>
+    <script src="/javascripts/add.js" defer></script>
 </body>
 </html>

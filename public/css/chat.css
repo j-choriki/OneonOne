@@ -36,6 +36,14 @@ body .main .main__wrap #video-wrap {
   z-index: 1;
 }
 body .main .main__wrap #video-wrap video:nth-of-type(1) {
+  width: 20%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border: 6px solid #597594;
+}
+body .main .main__wrap #video-wrap video:nth-of-type(2), body .main .main__wrap #video-wrap video:nth-of-type(3) {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -45,10 +53,4 @@ body .main .main__wrap #video-wrap video:nth-of-type(1) {
   min-width: 100%;
   min-height: 100%;
   transform: translate(-50%, -50%);
-}
-body .main .main__wrap #video-wrap video:nth-of-type(3) {
-  width: 20%;
-  position: absolute;
-  top: 0;
-  left: 0;
 }/*# sourceMappingURL=chat.css.map */

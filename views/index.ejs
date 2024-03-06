@@ -9,6 +9,11 @@
   </head>
   <body>
     <header>
+      <nav>
+        <ul>
+          <li id="logoutBtn"><img src="/images/logout.png" alt="ログアウトアイコン" width="50"></li>
+        </ul>
+      </nav>
     </header>
     <main>
         <!-- 名前表示 -->
@@ -44,7 +49,7 @@
           <div id="msg_header">
             <h3 id="msg_header_name"></h3>
             <form method="post" action="" id="callForm" class="">
-              <input type="image" src="/images/phone.svg" alt="電話のアイコン" width="50">
+              <input type="image" src="/images/phone.svg" alt="電話のアイコン" width="50" id="formPhoneImg">
               <input type="hidden" name="btn" value="chat">
               <!-- 通話開始時に必要な情報を送信するため-->
               <input type="hidden" name="phoneData" value="" id="phoneData">

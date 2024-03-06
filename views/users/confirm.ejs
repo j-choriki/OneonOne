@@ -4,28 +4,32 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/stylesheets/style.css"/>
+<link rel="stylesheet" href="/css/destyle.css"/>
+<link rel="stylesheet" href="/css/confirm.css"/>
 <title><%= title %></title>
 </head>
+
 <body>
     <header>
         <h1><%= title %></h1>
     </header>
     <main>
-        <p>登録内容に間違いはありませんか？</p>
-        <table>
-            <% for(let i in formVal){ %>
-                <tr>
-                    <th><%= formName[i] %></th>
-                    <td><%= formVal[i] %></td>
-                </tr>
-            <% } %>
-        </table>
+        <section>
+            <p>登録内容に間違いはありませんか？</p>
+            <table>
+                <% for(let i in formVal){ %>
+                    <tr>
+                        <th><%= formName[i] %></th>
+                        <td><%= formVal[i] %></td>
+                    </tr>
+                <% } %>
+            </table>
 
-        <form action="/users/confirm" method="post">
-            <button name="btn" value="back">戻る</button>
-            <button name="btn" value="insert">登録</button>
-        </form>
+            <form action="/users/confirm" method="post">
+                <button name="btn" value="back">戻る</button>
+                <button name="btn" value="insert">登録</button>
+            </form>
+        </section>
     </main>
 </body>
 </html>

@@ -8,8 +8,13 @@ body{
     display: flex;
     header{
         width: 5%;
-        // height: 100vh;
         background-color: $headerColor;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        nav{
+            margin-bottom: 10px;
+        }
     }
     main{
         width: 100%;

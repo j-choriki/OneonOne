@@ -11,13 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Group.belongsTo(models.Member);
+      // Group.belongsTo(models.Member);
+      Group.hasOne(models.Member);
     }
   }
   Group.init({
     name: DataTypes.STRING,
-    kana: DataTypes.STRING
+    kana: DataTypes.STRING,
   }, {
+
     sequelize,
     modelName: 'Group',
   });

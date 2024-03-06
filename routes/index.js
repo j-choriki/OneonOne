@@ -195,6 +195,7 @@ router.post('/talk_data', (req, res, next) => {
         ],
         titleId : {[Op.eq]: titleId},
       }
+
     }).then(data=> {
       
         talkAry = [];
@@ -206,6 +207,19 @@ router.post('/talk_data', (req, res, next) => {
         }
         res.json(talkAry); 
     })
+})
+
+//ログアウト処理
+router.post('/logout', (req, res, next) => {
+  let userId = req.body.userId;
+  db.Member.findOne({
+    where:{
+      memberNum: userId
+    }
+  }).then(usr => {
+    usr.state = 3; //ログアウト状態
+    usr.save();  
+  })
 })
 
 module.exports = router;

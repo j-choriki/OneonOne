@@ -5,6 +5,12 @@ body {
 body header {
   width: 5%;
   background-color: #284155;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+body header nav {
+  margin-bottom: 10px;
 }
 body main {
   width: 100%;
