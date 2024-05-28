@@ -5,7 +5,7 @@ let members = document.getElementsByClassName('member');
 
 //投稿タイトルを表示するul
 const ulSubject = document.getElementsByClassName('subject')[0];
-
+ulSubject.innerHTML = '';
 //表示されて投稿タイトル取得用の変数
 let titles;
 
@@ -14,6 +14,7 @@ let titleId = '';
 
 //talkエリアのulを取得
 let ulTalk = document.getElementsByClassName('talk')[0];
+ulTalk.innerHTML = '';
 
 let socket = io();
 
@@ -111,11 +112,11 @@ for(let member of members){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ memberId: memberId }) 
-        }).catch(error => {
-            console.error('通信エラー:', error);
-        });
-
-        //メッセージボードのヘッダーの名前と所属を変更する
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Fetch request failed');
+            }
+             //メッセージボードのヘッダーの名前と所属を変更する
         const msgHeaderName = document.getElementById('msg_header_name');
         let parentNode = member.parentNode.parentNode;
         let span = document.createElement('span');
@@ -214,6 +215,10 @@ for(let member of members){
         .catch(error => {
             console.error('通信エラー:', error);
         });
+            
+        }).catch(error => {
+            console.error('通信エラー:', error);
+        });
     })
     
 }
@@ -296,7 +301,6 @@ formsAry.forEach(form =>{
 //タイトルのソケット受信時の処理
 socket.on('insertTitle',(data) => {
     let receptionData = data; 
-    console.log('確認',data);
 
     //登録されたデータを画面に表示
     let li = document.createElement('li');

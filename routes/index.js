@@ -132,7 +132,7 @@ router.post('/session-insert-memberId', function(req, res, next) {
 });
 
 router.post('/get-user-and-member', function(req, res, next) {
-  console.log(req.session.memberId);
+  console.log('確認',req.session.memberId);
   // ユーザーID
   const userId = req.session.login.memberNum;
   const memberId = req.session.memberId;
